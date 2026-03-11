@@ -21,17 +21,19 @@ const MapSection = dynamic(() => import("@/components/MapSection"), {
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Navbar />
-      <HeroSection />
-      <PartnersSection />
-      <ProductsSection />
-      <WhyUsSection />
-      <VideoSection />
-      <GallerySection />
-      <ContactSection />
-      <MapSection />
-      <Footer />
-    </main>
+      <main className="overflow-hidden">
+        <HeroSection />
+        <PartnersSection />
+        <ProductsSection />
+        <WhyUsSection />
+        <VideoSection />
+        <GallerySection />
+        <ContactSection />
+        <MapSection />
+        <Footer />
+      </main>
+    </>
   );
 }

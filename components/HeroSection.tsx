@@ -26,19 +26,15 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      className="relative h-screen min-h-[700px] overflow-hidden flex items-center"
+      className="relative h-screen min-h-[700px] overflow-hidden flex items-center "
       id="pocetna"
     >
       {/* Parallax background */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{ y: bgY }}
-      >
+      <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
         <div
           className="w-full h-[120%] bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage:
-              "url('/images/hero-house.jpg')",
+            backgroundImage: "url('/images/hero-house.jpg')",
           }}
         />
       </motion.div>
@@ -47,7 +43,10 @@ export default function HeroSection() {
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
       {/* Content */}
-      <div className="relative z-20 w-full" style={{ paddingLeft: "8%" }}>
+      <div
+        className="relative z-20 w-full pt-[300px]"
+        style={{ paddingLeft: "8%" }}
+      >
         <motion.div
           className="max-w-[60%]"
           variants={containerVariants}
@@ -56,7 +55,7 @@ export default function HeroSection() {
         >
           {/* Gold line */}
           <motion.div
-            className="h-[3px] bg-brand-gold mb-8 origin-left"
+            className="h-[3px] bg-brand-gold mb-8 origin-left hidden md:block"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -106,10 +105,7 @@ export default function HeroSection() {
           </motion.div>
 
           {/* Stats */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap gap-10"
-          >
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-10">
             {[
               {
                 value: 15,
@@ -128,12 +124,12 @@ export default function HeroSection() {
               },
             ].map((stat, i) => (
               <div key={i} className="flex flex-col">
-                <span className="text-brand-gold text-3xl font-bold" style={{ fontFamily: "var(--font-playfair)" }}>
+                <span
+                  className="text-brand-gold text-3xl font-bold"
+                  style={{ fontFamily: "var(--font-playfair)" }}
+                >
                   {stat.value !== null ? (
-                    <AnimatedCounter
-                      target={stat.value}
-                      suffix={stat.suffix}
-                    />
+                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   ) : (
                     "EU"
                   )}
@@ -151,7 +147,9 @@ export default function HeroSection() {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
       >
-        <span className="text-white/40 text-xs tracking-widest uppercase">Scroll</span>
+        <span className="text-white/40 text-xs tracking-widest uppercase">
+          Scroll
+        </span>
         <ChevronDown className="text-brand-gold" size={24} />
       </motion.div>
     </section>
