@@ -24,47 +24,86 @@ function NavInner({
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-full">
-        {/* Logo */}
+        {/* Logo sa animacijom */}
         <a href="/" className="flex-shrink-0">
-          <Image
-            src="/images/logo/fenes-logo.png"
-            alt="FENES BH d.o.o. logo"
-            width={220}
-            height={70}
-            className="object-contain h-14 w-auto lg:h-16"
-            priority
-          />
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <Image
+              src="/images/logo/fenes-logo.png"
+              alt="FENES BH d.o.o. logo"
+              width={220}
+              height={70}
+              className="object-contain h-12 w-auto lg:h-14"
+              priority
+            />
+          </motion.div>
         </a>
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
+          {navLinks.map((link, i) => (
+            <motion.a
               key={link.label}
               href={link.href}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
               className="relative text-xs font-semibold tracking-widest text-brand-black/70 hover:text-brand-gold transition-colors duration-200 group"
             >
               {link.label}
               <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-brand-gold transition-all duration-300 group-hover:w-full" />
-            </a>
+            </motion.a>
           ))}
 
-          <a
+          <motion.a
             href="/#kontakt"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: navLinks.length * 0.07 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             className="ml-4 px-6 py-3 bg-brand-black text-white text-xs font-semibold tracking-widest uppercase border border-brand-gold hover:bg-brand-gold hover:text-brand-black transition-all duration-300"
           >
             ZATRAŽITE PONUDU
-          </a>
+          </motion.a>
         </div>
 
         {/* Mobile hamburger */}
-        <button
+        <motion.button
           className="lg:hidden p-2 text-brand-black"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
+          whileTap={{ scale: 0.9 }}
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          <AnimatePresence mode="wait">
+            {menuOpen ? (
+              <motion.span
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X size={24} />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="open"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Menu size={24} />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
       </div>
 
       {/* Mobile menu */}
@@ -77,25 +116,31 @@ function NavInner({
             transition={{ duration: 0.25 }}
             className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-brand-gold/20 overflow-hidden"
           >
-            <div className="px-6 py-4 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
+            <div className="px-6 py-4 flex flex-col gap-1">
+              {navLinks.map((link, i) => (
+                <motion.a
                   key={link.label}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-sm font-semibold tracking-widest text-brand-black/70 hover:text-brand-gold transition-colors duration-200 py-2 border-b border-brand-lightgray"
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: i * 0.05 }}
+                  className="text-sm font-semibold tracking-widest text-brand-black/70 hover:text-brand-gold transition-colors duration-200 py-3 border-b border-brand-lightgray"
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
 
-              <a
+              <motion.a
                 href="/#kontakt"
                 onClick={() => setMenuOpen(false)}
-                className="mt-2 px-6 py-3 bg-brand-black text-white text-xs font-semibold tracking-widest uppercase text-center border border-brand-gold"
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2, delay: navLinks.length * 0.05 }}
+                className="mt-3 px-6 py-3 bg-brand-black text-white text-xs font-semibold tracking-widest uppercase text-center border border-brand-gold"
               >
-                ZATRAŽITE PONUDU SADA
-              </a>
+                ZATRAŽITE PONUDU
+              </motion.a>
             </div>
           </motion.div>
         )}

@@ -44,11 +44,11 @@ export default function HeroSection() {
 
       {/* Content */}
       <div
-        className="relative z-20 w-full pt-[300px]"
-        style={{ paddingLeft: "8%" }}
+        className="relative z-20 w-full px-6 md:px-0 pt-24 md:pt-0"
+        style={{ paddingLeft: undefined }}
       >
         <motion.div
-          className="max-w-[60%]"
+          className="w-full md:max-w-[60%] md:pl-[8%]"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
