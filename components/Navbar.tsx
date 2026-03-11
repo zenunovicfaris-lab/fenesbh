@@ -94,7 +94,7 @@ function NavInner({
                 onClick={() => setMenuOpen(false)}
                 className="mt-2 px-6 py-3 bg-brand-black text-white text-xs font-semibold tracking-widest uppercase text-center border border-brand-gold"
               >
-                ZATRAŽITE PONUDU
+                ZATRAŽITE PONUDU SADA
               </a>
             </div>
           </motion.div>
