@@ -14,31 +14,25 @@ const navLinks = [
   { label: "KONTAKT", href: "/#kontakt" },
 ];
 
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+function NavInner({
+  menuOpen,
+  setMenuOpen,
+}: {
+  menuOpen: boolean;
+  setMenuOpen: (v: boolean) => void;
+}) {
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-brand-gold/20 transition-all duration-300 ${
-        scrolled ? "shadow-lg shadow-black/10" : ""
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+    <>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-20 lg:h-24">
         {/* Logo */}
-        <a href="#" className="flex-shrink-0">
+        <a href="/" className="flex-shrink-0">
           <Image
             src="/images/logo/fenes-logo.png"
             alt="FENES BH d.o.o. logo"
-            width={120}
-            height={40}
-            className="object-contain"
+            width={220}
+            height={70}
+            className="object-contain h-14 w-auto lg:h-16"
+            priority
           />
         </a>
 
@@ -104,6 +98,53 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
+  );
+}
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      {/*
+       * Relative nav — uvijek u document flow-u kako bi hero bio ispod.
+       * Kada je scrolled=true postaje invisible ali i dalje zauzima prostor
+       * (sprječava layout jump kada fixed nav slide-uje unutra).
+       */}
+      <nav
+        className={`relative z-50 backdrop-blur-xl bg-white/80 border-b border-brand-gold/20 transition-opacity duration-200 ${
+          scrolled ? "invisible" : "visible"
+        }`}
+      >
+        <NavInner menuOpen={!scrolled && menuOpen} setMenuOpen={setMenuOpen} />
+      </nav>
+
+      {/*
+       * Fixed nav — slide-uje se odozgo kada korisnik počne skrolati,
+       * slide-uje se gore kada se vrati na vrh.
+       */}
+      <AnimatePresence>
+        {scrolled && (
+          <motion.nav
+            key="fixed-nav"
+            className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-brand-gold/20 shadow-lg shadow-black/10"
+            initial={{ y: "-100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <NavInner menuOpen={scrolled && menuOpen} setMenuOpen={setMenuOpen} />
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
